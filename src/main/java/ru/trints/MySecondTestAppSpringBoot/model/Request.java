@@ -15,28 +15,51 @@ import jakarta.validation.constraints.Size;
 @AllArgsConstructor
 public class Request {
 
-    @NotBlank
+    /** Уникальный идентификатор сообщения. */
+    @NotBlank(message = "UID не может быть пустым")
     @Size(max = 32)
     private String uid;
 
+    /** Уникальный идентификатор операции. */
     @NotBlank
     @Size(max = 32)
     private String operationUid;
 
+    /** Имя системы-отправителя. */
     private Systems systemName;
 
+    /** Время создания сообщения. */
     @NotBlank
     private String systemTime;
 
+    /** Наименование ресурса. */
     private String source;
 
+    /** Уникальный идентификатор коммуникации. */
     @Min(1)
     @Max(100000)
-    private int communicationId;
+    private Integer communicationId;
 
-    private int templateId;
-    private int productCode;
-    private int smsCode;
+    /** Уникальный идентификатор шаблона. */
+    private Integer templateId;
+
+    /** Код продукта. */
+    private Integer productCode;
+
+    /** SMS-код. */
+    private Integer smsCode;
+
+    /** Должность сотрудника. */
+    private Positions position;
+
+    /** Размер заработной платы. */
+    private Double salary;
+
+    /** Коэффициент премирования. */
+    private Double bonus;
+
+    /** Количество отработанных дней в году. */
+    private Integer workDays;
 
     @Override
     public String toString() {
@@ -50,6 +73,10 @@ public class Request {
                 ", templateId=" + templateId +
                 ", productCode=" + productCode +
                 ", smsCode=" + smsCode +
+                ", position=" + position +
+                ", salary=" + salary +
+                ", bonus=" + bonus +
+                ", workDays=" + workDays +
                 '}';
     }
 }

@@ -1,0 +1,25 @@
+package ru.trints.MySecondTestAppSpringBoot.service;
+
+import org.junit.jupiter.api.Test;
+import ru.trints.MySecondTestAppSpringBoot.model.Positions;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+class AnnualBonusServiceImplTest {
+
+    @Test
+    void calculate() {
+        // given
+        Positions position = Positions.HR;
+        double bonus = 2.0;
+        int workDays = 243;
+        double salary = 100000.00;
+
+        // when
+        double result = new AnnualBonusServiceImpl().calculate(position, salary, bonus, workDays);
+
+        // then
+        double expected = 100000.00 * 2.0 * java.time.Year.now().length() * 1.2 / 243;
+        assertThat(result).isEqualTo(expected);
+    }
+}
