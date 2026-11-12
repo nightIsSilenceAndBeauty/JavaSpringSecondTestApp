@@ -18,6 +18,7 @@ import ru.trints.MySecondTestAppSpringBoot.model.ErrorCodes;
 import ru.trints.MySecondTestAppSpringBoot.model.ErrorMessages;
 import ru.trints.MySecondTestAppSpringBoot.model.Request;
 import ru.trints.MySecondTestAppSpringBoot.model.Response;
+import ru.trints.MySecondTestAppSpringBoot.service.ModifyRequestService;
 import ru.trints.MySecondTestAppSpringBoot.service.ModifyResponseService;
 import ru.trints.MySecondTestAppSpringBoot.service.ValidationService;
 import ru.trints.MySecondTestAppSpringBoot.util.DateTimeUtil;
@@ -27,16 +28,19 @@ import ru.trints.MySecondTestAppSpringBoot.util.DateTimeUtil;
 public class MyController {
 
     private final ValidationService validationService;
+    private final ModifyRequestService modifyRequestService;
     private final ModifyResponseService modifySystemTimeService;
     private final ModifyResponseService modifyOperationUidService;
 
     @Autowired
     public MyController(
             ValidationService validationService,
+            ModifyRequestService modifyRequestService,
             @Qualifier("ModifySystemTimeResponseService") ModifyResponseService modifySystemTimeService,
             @Qualifier("ModifyOperationUidResponseService") ModifyResponseService modifyOperationUidService
     ) {
         this.validationService = validationService;
+        this.modifyRequestService = modifyRequestService;
         this.modifySystemTimeService = modifySystemTimeService;
         this.modifyOperationUidService = modifyOperationUidService;
     }
@@ -87,6 +91,7 @@ public class MyController {
         modifyOperationUidService.modify(response);
         log.info("Изменение systemTime в response");
         modifySystemTimeService.modify(response);
+        modifyRequestService.modify(request);
         log.info("response: {}", response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
