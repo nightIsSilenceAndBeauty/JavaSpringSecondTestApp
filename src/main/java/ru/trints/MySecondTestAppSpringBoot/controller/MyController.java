@@ -50,6 +50,7 @@ public class MyController {
             @Valid @RequestBody Request request,
             BindingResult bindingResult
     ) {
+        long requestReceivedAtMillis = System.currentTimeMillis();
         log.info("request: {}", request);
         Response response = Response.builder()
                 .uid(request.getUid())
@@ -91,7 +92,7 @@ public class MyController {
         modifyOperationUidService.modify(response);
         log.info("Изменение systemTime в response");
         modifySystemTimeService.modify(response);
-        modifyRequestService.modify(request);
+        modifyRequestService.modify(request, requestReceivedAtMillis);
         log.info("response: {}", response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
